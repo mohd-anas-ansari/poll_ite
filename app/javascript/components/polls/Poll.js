@@ -7,11 +7,11 @@ class Poll extends React.Component {
 			<React.Fragment>
 				<div style={{border: "1px solid red"}}>
 					<h1>{poll.question}</h1>
-					<ul>
+					<div className="options">
 						{poll.options.map((option, i) => {
-							return <li key={i}>{option}</li>
+							return <button key={i}>{option}</button>
 					})}
-					</ul>
+					</div>
 				</div>
 			</React.Fragment>
 		);
