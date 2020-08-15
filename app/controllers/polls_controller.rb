@@ -4,6 +4,20 @@ class PollsController < ApplicationController
   end
 
   def new
-    @poll = Poll.new
   end
+
+  def create
+    @poll = Poll.create(poll_params)
+  end
+
+  def show
+  end
+
+
+  private
+    def poll_params
+      puts params
+      params.require(:poll).permit(:question)
+    end
+
 end
