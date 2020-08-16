@@ -8,6 +8,7 @@ Rails.application.routes.draw do
 
   resources :users, only: [:new, :create]
 
+  resources :polls
   get 'login', to: 'sessions#new'
   post 'login', to: 'sessions#create'
   get 'welcome', to: 'sessions#welcome'
@@ -16,5 +17,4 @@ Rails.application.routes.draw do
   get "/demo" => "demo#index"
   post "/vote" => "votes#vote_and_show"
 
-  resources :polls
 end
