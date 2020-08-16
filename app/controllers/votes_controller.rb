@@ -2,25 +2,27 @@ class VotesController < ApplicationController
   skip_before_action :authorized, only: [:vote_and_show]
 
   def vote_and_show
-    vote_and_message = {}
+    vote_message_ballot = {}
     if logged_in? 
       poll_id = vote_params["poll_id"]
       option_number = vote_params[:option] + 1
 
       @vote = Vote.find_by(poll_id: poll_id)
-
       increment_the_count(option_number)
       
+      ballot = Ballot.create(user_id: session[:user_id], poll_id: poll_id, voted_option: option_number)     
 
-      p @vote, "VOTE"
+      p ballot, "BALLOT"
 
-      vote_and_message["voteCount"] = @vote
-      vote_and_message["message"] = ""
-      render json: vote_and_message
+      vote_message_ballot["voteCount"] = @vote
+      vote_message_ballot["message"] = ""
+      vote_message_ballot["ballot"] = ballot
+      render json: vote_message_ballot
     else 
-      vote_and_message["voteCount"] = nil
-      vote_and_message["message"] = "Please login to VOTE!!"
-      render json: vote_and_message
+      vote_message_ballot["voteCount"] = nil
+      vote_message_ballot["ballot"] = nil
+      vote_message_ballot["message"] = "Please login to VOTE!!"
+      render json: vote_message_ballot
     end
   end
 

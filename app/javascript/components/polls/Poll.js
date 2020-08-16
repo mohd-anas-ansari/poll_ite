@@ -8,7 +8,7 @@ class Poll extends React.Component {
 		errorMsg: ""
 	};
 
-	displayVoteCounts = (i) => {
+	voteAndDisplayVoteCounts = (i) => {
 		let vote = {option: i, poll_id: this.props.poll.id};
 		let api = "/vote"
 		
@@ -26,6 +26,8 @@ class Poll extends React.Component {
 		this.setState({ showVotes: true });
 	};
 
+
+
 	render() {
 		let poll = this.props.poll;
 		console.log(poll);
@@ -38,7 +40,7 @@ class Poll extends React.Component {
 						{poll.options.map((option, i) => {
 							return (
 								<>
-								<button key={i} onClick={() => this.displayVoteCounts(i)}>
+								<button key={i} onClick={() => this.voteAndDisplayVoteCounts(i)}>
 									{option}
 								</button>
 								<br />
