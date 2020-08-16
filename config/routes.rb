@@ -14,7 +14,10 @@ Rails.application.routes.draw do
   get 'welcome', to: 'sessions#welcome'
   get 'authorized', to: 'sessions#page_requires_login'
   
-  get "/demo" => "demo#index"
-  post "/vote" => "votes#vote_and_show"
+  get "/vote" => "votes#show_votes_count_and_ballots_where_user_participated"
 
+  post "/vote" => "votes#vote_and_show"
+  
+
+  get "/demo" => "demo#index"
 end

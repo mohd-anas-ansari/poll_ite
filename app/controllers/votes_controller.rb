@@ -12,8 +12,6 @@ class VotesController < ApplicationController
       
       ballot = Ballot.create(user_id: session[:user_id], poll_id: poll_id, voted_option: option_number)     
 
-      p ballot, "BALLOT"
-
       vote_message_ballot["voteCount"] = @vote
       vote_message_ballot["message"] = ""
       vote_message_ballot["ballot"] = ballot
@@ -26,9 +24,7 @@ class VotesController < ApplicationController
     end
   end
 
-
   def increment_the_count(number)
-    puts number, "NUMBER"
     case number
     when 1
       @vote.increment!(:option_1)
@@ -40,6 +36,20 @@ class VotesController < ApplicationController
       @vote.increment!(:option_4)
     else
       "Invalid input"
+    end
+  end
+
+  def show_votes_count_and_ballots_where_user_participated
+    @all_ballots = Ballot.where(:user_id => current_user)
+    find_votes_count()
+    render json: [@all_ballots, @votes]
+  end
+
+  def find_votes_count 
+    @votes = []
+    @all_ballots.each do |item|
+      vote = Vote.find_by(poll_id: item["poll_id"])
+      @votes << vote
     end
   end
 
