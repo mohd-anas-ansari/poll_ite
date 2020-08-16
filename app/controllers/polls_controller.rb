@@ -8,6 +8,7 @@ class PollsController < ApplicationController
 
   def create
     @poll = Poll.create(poll_params)
+    @vote = Vote.create(poll_id: @poll.id)
   end
 
   def show
