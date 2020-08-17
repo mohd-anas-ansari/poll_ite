@@ -40,10 +40,10 @@ ActiveRecord::Schema.define(version: 2020_08_16_092446) do
 
   create_table "votes", force: :cascade do |t|
     t.integer "poll_id"
-    t.integer "option_1"
-    t.integer "option_2"
-    t.integer "option_3"
-    t.integer "option_4"
+    t.integer "option_1", default: 0
+    t.integer "option_2", default: 0
+    t.integer "option_3", default: 0
+    t.integer "option_4", default: 0
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["poll_id"], name: "index_votes_on_poll_id"
