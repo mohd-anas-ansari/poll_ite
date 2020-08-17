@@ -14,7 +14,7 @@ Rails.application.routes.draw do
   get 'welcome', to: 'sessions#welcome'
   get 'authorized', to: 'sessions#page_requires_login'
   
-  get "/vote/:id" => "votes#show_vote_count_and_ballot_where_user_participated"
+  get "/vote/:id" => "votes#show_vote_count_and_ballot_in_which_user_participated"
 
   post "/vote" => "votes#vote_and_show"
   
