@@ -1,5 +1,6 @@
 class PollsController < ApplicationController
   skip_before_action :authorized, only: [:index]
+
   def index
     @polls = Poll.all
   end
@@ -8,13 +9,15 @@ class PollsController < ApplicationController
   end
 
   def create
-    @poll = Poll.create(poll_params)
+    @poll = Poll.create(user_id: current_user.id, 
+                        question: poll_params[:question], 
+                        options: poll_params[:options])
+                        
     @vote = Vote.create(poll_id: @poll.id)
   end
 
   def show
   end
-
 
   private
     def poll_params
@@ -23,3 +26,12 @@ class PollsController < ApplicationController
     end
 
 end
+
+
+
+
+
+
+
+
+# What is the difference between :options and options: . How can poll_params can take both
