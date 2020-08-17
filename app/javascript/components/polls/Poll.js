@@ -6,6 +6,7 @@ class Poll extends React.Component {
 		showVotes: false,
 		voteCount: null,
 		errorMsg: "",
+		ballot: null,
 	};
 
 	componentDidMount() {
@@ -44,9 +45,9 @@ class Poll extends React.Component {
 			},
 		})
 			.then((response) => response.json())
-			.then((data) => {
-				console.log(data, "fetchVotesCountAndUserBallot");
-				// this.setState({ voteCount: data.vote, errorMsg: data.message });
+			.then((ballotAndCount) => {
+				console.log(ballotAndCount, "fetchVotesCountAndUserBallot");
+				this.setState({ voteCount: ballotAndCount[1], ballot: ballotAndCount[0] });
 			});
 	};
 

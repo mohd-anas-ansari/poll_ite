@@ -40,9 +40,12 @@ class VotesController < ApplicationController
   end
 
   def show_vote_count_and_ballot_where_user_participated
-    @vote = Vote.find(params[:id])
-    @ballot = Ballot.find(params[:id])
-    render json: [@ballot, @vote]
+    @ballot = Ballot.find_by(user_id: current_user[:id], poll_id: params[:id])
+    
+    if @ballot.present?
+      @vote = Vote.find(params[:id])
+      render json: [@ballot, @vote]
+    end
   end
 
   private
