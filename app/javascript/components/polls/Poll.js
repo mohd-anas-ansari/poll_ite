@@ -9,7 +9,7 @@ class Poll extends React.Component {
 	};
 
 	componentDidMount() {
-		this.fetchVotesCountAndBallot();
+		this.fetchVoteCountAndUserBallot(this.props.poll.id);
 	}
 
 	vote = (i) => {
@@ -32,9 +32,9 @@ class Poll extends React.Component {
 		this.setState({ showVotes: true });
 	};
 
-	fetchVotesCountAndBallot = () => {
+	fetchVoteCountAndUserBallot = (id) => {
 		// show only those polls votes, that have been voted by User
-		let api = "/vote";
+		let api = `/vote/${id}`;
 
 		fetch(api, {
 			method: "GET",
@@ -45,7 +45,7 @@ class Poll extends React.Component {
 		})
 			.then((response) => response.json())
 			.then((data) => {
-				console.log(data, "fetchVotesCountAndBallot");
+				console.log(data, "fetchVotesCountAndUserBallot");
 				// this.setState({ voteCount: data.vote, errorMsg: data.message });
 			});
 	};

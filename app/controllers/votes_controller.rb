@@ -39,18 +39,10 @@ class VotesController < ApplicationController
     end
   end
 
-  def show_votes_count_and_ballots_where_user_participated
-    @all_ballots = Ballot.where(:user_id => current_user)
-    find_votes_count()
-    render json: [@all_ballots, @votes]
-  end
-
-  def find_votes_count 
-    @votes = []
-    @all_ballots.each do |item|
-      vote = Vote.find_by(poll_id: item["poll_id"])
-      @votes << vote
-    end
+  def show_vote_count_and_ballot_where_user_participated
+    @vote = Vote.find(params[:id])
+    @ballot = Ballot.find(params[:id])
+    render json: [@ballot, @vote]
   end
 
   private
