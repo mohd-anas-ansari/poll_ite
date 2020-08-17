@@ -58,7 +58,14 @@ class Poll extends React.Component {
 		);
 	};
 
-	showDisabledButtonsWithCounts = () => {};
+	showDisabledButtonWithCount = (i, option) => {
+		return (
+			<>
+				<h5 key={i}>{option}</h5>
+				<p>{this.state.voteCount[`option_${i + 1}`]}</p>
+			</>
+		);
+	};
 
 	render() {
 		let poll = this.props.poll;
@@ -66,19 +73,15 @@ class Poll extends React.Component {
 			<React.Fragment>
 				<div style={{ border: "1px solid red" }}>
 					{this.state.errorMsg ? <p>{this.state.errorMsg}</p> : null}
+
 					<h1>{poll.question}</h1>
+
 					<div className="options">
-						{poll.options.map((option, i) => {
-							return (
-								<>
-									{this.showButton(i, option)}
-									<br />
-									{this.state.voteCount ? (
-										<p>{this.state.voteCount[`option_${i + 1}`]}</p>
-									) : null}
-								</>
-							);
-						})}
+						{poll.options.map((option, i) =>
+							this.state.voteCount
+								? this.showDisabledButtonWithCount(i, option)
+								: this.showButton(i, option)
+						)}
 					</div>
 				</div>
 			</React.Fragment>
