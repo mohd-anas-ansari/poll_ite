@@ -46,7 +46,11 @@ class VotesController < ApplicationController
     if @ballot.present?
       @vote = Vote.find(params[:id])
       render json: [@ballot, @vote]
+    else 
+      render json:[nil, nil]
     end
+
+
   end
 
   private
