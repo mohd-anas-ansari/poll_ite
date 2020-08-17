@@ -62,7 +62,7 @@ class Poll extends React.Component {
 		return (
 			<>
 				<h5 key={i}>{option}</h5>
-				<p>{this.state.voteCount[`option_${i + 1}`]}</p>
+				<p key={i}>{this.state.voteCount[`option_${i + 1}`]}</p>
 			</>
 		);
 	};
