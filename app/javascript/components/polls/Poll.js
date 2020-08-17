@@ -60,10 +60,10 @@ class Poll extends React.Component {
 
 	showDisabledButtonWithCount = (i, option) => {
 		return (
-			<>
-				<h5 key={i}>{option}</h5>
-				<p key={i}>{this.state.voteCount[`option_${i + 1}`]}</p>
-			</>
+			<div key={i}>
+				<h5>{option}</h5>
+				<p>{this.state.voteCount[`option_${i + 1}`]}</p>
+			</div>
 		);
 	};
 
