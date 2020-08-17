@@ -12,7 +12,7 @@ class Poll extends React.Component {
 		this.fetchVotesCountAndBallot();
 	}
 
-	voteAndDisplayVoteCounts = (i) => {
+	vote = (i) => {
 		let vote = { option: i, poll_id: this.props.poll.id };
 		let api = "/vote";
 
@@ -50,6 +50,16 @@ class Poll extends React.Component {
 			});
 	};
 
+	showButton = (i, option) => {
+		return (
+			<button key={i} onClick={() => this.vote(i)}>
+				{option}
+			</button>
+		);
+	};
+
+	showDisabledButtonsWithCounts = () => {};
+
 	render() {
 		let poll = this.props.poll;
 		return (
@@ -61,12 +71,7 @@ class Poll extends React.Component {
 						{poll.options.map((option, i) => {
 							return (
 								<>
-									<button
-										key={i}
-										onClick={() => this.voteAndDisplayVoteCounts(i)}
-									>
-										{option}
-									</button>
+									{this.showButton(i, option)}
 									<br />
 									{this.state.voteCount ? (
 										<p>{this.state.voteCount[`option_${i + 1}`]}</p>
