@@ -8,9 +8,10 @@ class VotesController < ApplicationController
       option_number = vote_params[:option] + 1
 
       @vote = Vote.find_by(poll_id: poll_id)
+      ballot = Ballot.create(user_id: session[:user_id], poll_id: poll_id, voted_option: option_number)     
+
       increment_the_count(option_number)
       
-      ballot = Ballot.create(user_id: session[:user_id], poll_id: poll_id, voted_option: option_number)     
 
       vote_message_ballot["voteCount"] = @vote
       vote_message_ballot["message"] = ""
@@ -39,18 +40,17 @@ class VotesController < ApplicationController
     end
   end
 
-  def show_votes_count_and_ballots_where_user_participated
-    @all_ballots = Ballot.where(:user_id => current_user)
-    find_votes_count()
-    render json: [@all_ballots, @votes]
-  end
-
-  def find_votes_count 
-    @votes = []
-    @all_ballots.each do |item|
-      vote = Vote.find_by(poll_id: item["poll_id"])
-      @votes << vote
+  def show_vote_count_and_ballot_in_which_user_participated
+    @ballot = Ballot.find_by(user_id: current_user[:id], poll_id: params[:id])
+    
+    if @ballot.present?
+      @vote = Vote.find(params[:id])
+      render json: [@ballot, @vote]
+    else 
+      render json:[nil, nil]
     end
+
+
   end
 
   private

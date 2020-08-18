@@ -6,13 +6,14 @@ class Poll extends React.Component {
 		showVotes: false,
 		voteCount: null,
 		errorMsg: "",
+		ballot: null,
 	};
 
 	componentDidMount() {
-		this.fetchVotesCountAndBallot();
+		this.fetchVoteCountAndUserBallot(this.props.poll.id);
 	}
 
-	voteAndDisplayVoteCounts = (i) => {
+	vote = (i) => {
 		let vote = { option: i, poll_id: this.props.poll.id };
 		let api = "/vote";
 
@@ -32,9 +33,9 @@ class Poll extends React.Component {
 		this.setState({ showVotes: true });
 	};
 
-	fetchVotesCountAndBallot = () => {
+	fetchVoteCountAndUserBallot = (id) => {
 		// show only those polls votes, that have been voted by User
-		let api = "/vote";
+		let api = `/vote/${id}`;
 
 		fetch(api, {
 			method: "GET",
@@ -44,10 +45,27 @@ class Poll extends React.Component {
 			},
 		})
 			.then((response) => response.json())
-			.then((data) => {
-				console.log(data, "fetchVotesCountAndBallot");
-				// this.setState({ voteCount: data.vote, errorMsg: data.message });
+			.then((ballotAndCount) => {
+				console.log(ballotAndCount, "fetchVotesCountAndUserBallot");
+				this.setState({ voteCount: ballotAndCount[1], ballot: ballotAndCount[0] });
 			});
+	};
+
+	showButton = (i, option) => {
+		return (
+			<button key={i} onClick={() => this.vote(i)}>
+				{option}
+			</button>
+		);
+	};
+
+	showDisabledButtonWithCount = (i, option) => {
+		return (
+			<div key={i}>
+				<h5>{option}</h5>
+				<p>{this.state.voteCount[`option_${i + 1}`]}</p>
+			</div>
+		);
 	};
 
 	render() {
@@ -56,24 +74,15 @@ class Poll extends React.Component {
 			<React.Fragment>
 				<div style={{ border: "1px solid red" }}>
 					{this.state.errorMsg ? <p>{this.state.errorMsg}</p> : null}
+
 					<h1>{poll.question}</h1>
+
 					<div className="options">
-						{poll.options.map((option, i) => {
-							return (
-								<>
-									<button
-										key={i}
-										onClick={() => this.voteAndDisplayVoteCounts(i)}
-									>
-										{option}
-									</button>
-									<br />
-									{this.state.voteCount ? (
-										<p>{this.state.voteCount[`option_${i + 1}`]}</p>
-									) : null}
-								</>
-							);
-						})}
+						{poll.options.map((option, i) =>
+							this.state.voteCount
+								? this.showDisabledButtonWithCount(i, option)
+								: this.showButton(i, option)
+						)}
 					</div>
 				</div>
 			</React.Fragment>
