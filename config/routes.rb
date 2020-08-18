@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   # get 'users/new'
   # get 'users/create'
 
+  root "polls#index"
   resources :users, only: [:new, :create]
 
   resources :polls
