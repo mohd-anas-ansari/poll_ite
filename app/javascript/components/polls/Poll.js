@@ -54,6 +54,22 @@ class Poll extends React.Component {
 			});
 	};
 
+	showTotalCount = (AllOptionsIndividualCount) => {
+		let totalVotesincludingAllOptions =
+			AllOptionsIndividualCount.option_1 +
+			AllOptionsIndividualCount.option_2 +
+			AllOptionsIndividualCount.option_3 +
+			AllOptionsIndividualCount.option_4;
+
+		return (
+			<h3 className="text-center" key={this.state.poll && this.state.poll.poll_id}>
+				<span className="badge badge-secondary">
+					Total Votes: {totalVotesincludingAllOptions}
+				</span>
+			</h3>
+		);
+	};
+
 	showButton = (i, option) => {
 		return (
 			<button
@@ -73,29 +89,37 @@ class Poll extends React.Component {
 		let noOfPeopleWhoVotedOnThisOption = this.state.voteCount[
 			`option_${i + 1}`
 		];
+
+		// let totalVotesincludingAllOptions = (voteCount) => {
+		// 	return Object.values(voteCount).reduce((a, b) => a + b, 0);
+		// };
+
 		return (
-			<div key={i} className="m-3">
-				<button
-					className={`btn btn-${isThisVotedOption ? "success" : "primary"}`}
-					disabled
-				>
-					{option}
-				</button>
-				{noOfPeopleWhoVotedOnThisOption ? (
-					<span class="badge badge-pill badge-dark ml-2">
-						{noOfPeopleWhoVotedOnThisOption}
-					</span>
-				) : null}
+			<div className="disabled-buttons-container">
+				<div key={i} className="m-3">
+					<button
+						className={`btn btn-${isThisVotedOption ? "success" : "primary"}`}
+						disabled
+					>
+						{option}
+					</button>
+					{noOfPeopleWhoVotedOnThisOption ? (
+						<span className="badge badge-pill badge-dark ml-2">
+							{noOfPeopleWhoVotedOnThisOption}
+						</span>
+					) : null}
+				</div>
 			</div>
 		);
 	};
 
 	render() {
 		let poll = this.props.poll;
+		let voteCount = this.state.voteCount;
 
 		return (
-			<React.Fragment>
-				<div style={{ border: "1px solid red" }}>
+			<div style={{ border: "1px solid red" }}>
+				<div>
 					{this.state.errorMsg ? <p>{this.state.errorMsg}</p> : null}
 
 					<h1>{poll.question}</h1>
@@ -108,7 +132,8 @@ class Poll extends React.Component {
 						)}
 					</div>
 				</div>
-			</React.Fragment>
+				{voteCount ? this.showTotalCount(voteCount) : null}
+			</div>
 		);
 	}
 }
