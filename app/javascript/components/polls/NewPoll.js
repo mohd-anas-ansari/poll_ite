@@ -16,7 +16,7 @@ class NewPoll extends React.Component {
 
 	handleSubmit = (e) => {
 		e.preventDefault();
-		
+
 		const api = "/polls";
 		const poll = {};
 
@@ -95,7 +95,13 @@ class NewPoll extends React.Component {
 							/>
 						</label>
 					</div>
-					<button onClick={this.handleSubmit}>Submit</button>
+					<button
+						type="button"
+						class="btn btn-primary"
+						onClick={this.handleSubmit}
+					>
+						Submit
+					</button>
 				</form>
 			</React.Fragment>
 		);

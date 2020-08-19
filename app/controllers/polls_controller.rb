@@ -2,7 +2,8 @@ class PollsController < ApplicationController
   skip_before_action :authorized, only: [:index]
 
   def index
-    @polls = Poll.all
+    @polls = Poll.all.order("created_at DESC")
+    
   end
 
   def new
