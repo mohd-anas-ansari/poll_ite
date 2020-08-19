@@ -58,7 +58,7 @@ class Poll extends React.Component {
 		return (
 			<button
 				type="button"
-				class="btn btn-primary"
+				className="btn btn-primary"
 				key={i}
 				onClick={() => this.vote(i)}
 			>
@@ -73,7 +73,7 @@ class Poll extends React.Component {
 		return (
 			<div key={i}>
 				<button
-					class={`btn btn-${ isThisVotedOption ? "success" : "primary"}`}
+					className={`btn btn-${ isThisVotedOption ? "success" : "primary"}`}
 					disabled
 				>
 					{option}
