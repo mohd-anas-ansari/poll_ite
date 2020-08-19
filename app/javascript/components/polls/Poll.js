@@ -68,17 +68,24 @@ class Poll extends React.Component {
 	};
 
 	showDisabledButtonWithCount = (i, option) => {
-		let voted_option = this.state.ballot.voted_option;
+		let voted_option = this.state.ballot && this.state.ballot.voted_option;
 		let isThisVotedOption = voted_option == i + 1;
+		let noOfPeopleWhoVotedOnThisOption = this.state.voteCount[
+			`option_${i + 1}`
+		];
 		return (
-			<div key={i}>
+			<div key={i} className="m-3">
 				<button
-					className={`btn btn-${ isThisVotedOption ? "success" : "primary"}`}
+					className={`btn btn-${isThisVotedOption ? "success" : "primary"}`}
 					disabled
 				>
 					{option}
 				</button>
-				<p>{this.state.voteCount[`option_${i + 1}`]}</p>
+				{noOfPeopleWhoVotedOnThisOption ? (
+					<span class="badge badge-pill badge-dark ml-2">
+						{noOfPeopleWhoVotedOnThisOption}
+					</span>
+				) : null}
 			</div>
 		);
 	};
