@@ -62,7 +62,10 @@ class Poll extends React.Component {
 			AllOptionsIndividualCount.option_4;
 
 		return (
-			<h3 className="text-center" key={this.state.poll && this.state.poll.poll_id}>
+			<h3
+				className="text-center"
+				key={this.state.poll && this.state.poll.poll_id}
+			>
 				<span className="badge badge-secondary">
 					Total Votes: {totalVotesincludingAllOptions}
 				</span>
@@ -74,7 +77,7 @@ class Poll extends React.Component {
 		return (
 			<button
 				type="button"
-				className="btn btn-primary"
+				className="btn btn-primary ml-3"
 				key={i}
 				onClick={() => this.vote(i)}
 			>
@@ -118,21 +121,34 @@ class Poll extends React.Component {
 		let voteCount = this.state.voteCount;
 
 		return (
-			<div style={{ border: "1px solid red" }}>
-				<div>
-					{this.state.errorMsg ? <p>{this.state.errorMsg}</p> : null}
-
-					<h1>{poll.question}</h1>
-
-					<div className="options">
-						{poll.options.map((option, i) =>
-							this.state.voteCount
-								? this.showDisabledButtonWithCount(i, option)
-								: this.showButton(i, option)
-						)}
+			<div>
+				<div style={{ border: "1px solid red" }} className="card m-4">
+					<div class="card-header">Poll #{poll.id}</div>
+					<div class="card-body">
+						<h5 class="card-title">{poll.question}</h5>
+						<div className="options">
+							{poll.options.map((option, i) =>
+								this.state.voteCount
+									? this.showDisabledButtonWithCount(i, option)
+									: this.showButton(i, option)
+							)}
+						</div>
 					</div>
+					<div>
+						{this.state.errorMsg ? <p>{this.state.errorMsg}</p> : null}
+
+						{/* <h1>{poll.question}</h1>
+
+						<div className="options">
+							{poll.options.map((option, i) =>
+								this.state.voteCount
+									? this.showDisabledButtonWithCount(i, option)
+									: this.showButton(i, option)
+							)}
+						</div> */}
+					</div>
+					{voteCount ? this.showTotalCount(voteCount) : null}
 				</div>
-				{voteCount ? this.showTotalCount(voteCount) : null}
 			</div>
 		);
 	}
