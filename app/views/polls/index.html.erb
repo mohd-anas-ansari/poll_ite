@@ -4,10 +4,11 @@
 
 <% if logged_in? %>
   <h1>You are ready to VOTE, <%= current_user ? current_user.username : "" %>!!!</h1>
+  <%= button_to "Create Poll", '/polls/new', method: :get %>
   <%else %> 
     <h1>You need to Sign in to VOTE.</h1>
-    <%# <%= button_to "Login", '/login', method: :get %>
-    <%# <%= button_to "Sign Up", '/users/new', method: :get %>
+    <%= button_to "Login", '/login', method: :get %>
+    <%= button_to "Sign Up", '/users/new', method: :get %>
 <%end%>
 
 
