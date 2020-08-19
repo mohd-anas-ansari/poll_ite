@@ -47,13 +47,21 @@ class Poll extends React.Component {
 			.then((response) => response.json())
 			.then((ballotAndCount) => {
 				console.log(ballotAndCount, "fetchVotesCountAndUserBallot");
-				this.setState({ voteCount: ballotAndCount[1], ballot: ballotAndCount[0] });
+				this.setState({
+					voteCount: ballotAndCount[1],
+					ballot: ballotAndCount[0],
+				});
 			});
 	};
 
 	showButton = (i, option) => {
 		return (
-			<button key={i} onClick={() => this.vote(i)}>
+			<button
+				type="button"
+				class="btn btn-primary"
+				key={i}
+				onClick={() => this.vote(i)}
+			>
 				{option}
 			</button>
 		);
@@ -62,7 +70,7 @@ class Poll extends React.Component {
 	showDisabledButtonWithCount = (i, option) => {
 		return (
 			<div key={i}>
-				<h5>{option}</h5>
+				<button class="btn btn-primary" disabled>{option}</button>
 				<p>{this.state.voteCount[`option_${i + 1}`]}</p>
 			</div>
 		);
