@@ -68,9 +68,16 @@ class Poll extends React.Component {
 	};
 
 	showDisabledButtonWithCount = (i, option) => {
+		let voted_option = this.state.ballot.voted_option;
+		let isThisVotedOption = voted_option == i + 1;
 		return (
 			<div key={i}>
-				<button class="btn btn-primary" disabled>{option}</button>
+				<button
+					class={`btn btn-${ isThisVotedOption ? "success" : "primary"}`}
+					disabled
+				>
+					{option}
+				</button>
 				<p>{this.state.voteCount[`option_${i + 1}`]}</p>
 			</div>
 		);
@@ -78,6 +85,7 @@ class Poll extends React.Component {
 
 	render() {
 		let poll = this.props.poll;
+
 		return (
 			<React.Fragment>
 				<div style={{ border: "1px solid red" }}>
