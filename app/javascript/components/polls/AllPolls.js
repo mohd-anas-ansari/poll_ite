@@ -8,7 +8,9 @@ class AllPolls extends React.Component {
 		let polls = this.props.polls;
 		return (
 			<React.Fragment>
-				<h1>All Polls</h1>
+				<center>
+					<h1 className="m-4">All Polls</h1>
+				</center>
 				{console.log(this.props.polls)}
 
 				<div className="container mx-auto w-50">
