@@ -13,7 +13,7 @@ class Poll extends React.Component {
 		this.fetchVoteCountAndUserBallot(this.props.poll.id);
 	}
 
-	vote = (i) => {
+	vote = async (i) => {
 		let vote = { option: i, poll_id: this.props.poll.id };
 		let api = "/vote";
 
@@ -30,10 +30,12 @@ class Poll extends React.Component {
 				this.setState({ voteCount: data.voteCount, errorMsg: data.message });
 			});
 
-		this.setState({ showVotes: true });
+			await this.fetchVoteCountAndUserBallot(vote.poll_id)
+		this.setState({ showVotes: "show" });
 	};
 
 	fetchVoteCountAndUserBallot = (id) => {
+		console.log("FETCHING");
 		// show only those polls votes, that have been voted by User
 		let api = `/vote/${id}`;
 
